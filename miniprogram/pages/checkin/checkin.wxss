@@ -1,0 +1,216 @@
+.page_bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.checkin_btn_bg {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  width: 200rpx;
+  height: 200rpx;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+  border-radius: 43%;
+  animation-duration: 3000ms;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function: linear;
+  animation-name: 'checkin_btn_bg_grow';
+}
+
+.checkin_btn_bg2
+{
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  width: 210rpx;
+  height: 210rpx;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+  border-radius: 45%;
+  animation-duration: 2666ms;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function: linear;
+  animation-name: 'checkin_btn_bg_grow2';
+}
+
+.check_btn_front {
+  position: absolute;
+  background: white;
+  width: 180rpx;
+  height: 180rpx;
+  left: 50%;
+  top: 20%;
+  transform:translate(-50%, -50%);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 180rpx;
+  color: rgb(6, 83, 161);
+  box-shadow: 0rpx 0rpx 30rpx 2rpx rgba(6, 83, 161, 0.1);
+}
+
+@keyframes checkin_btn_bg_grow {
+  from {
+    transform: translate(-50%, -50%) rotateZ(0deg);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) rotateZ(180deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotateZ(360deg);
+  }
+}
+
+@keyframes checkin_btn_bg_grow2 {
+  from {
+    transform: translate(-50%, -50%) rotateZ(30deg);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) rotateZ(-150deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotateZ(-330deg);
+  }
+}
+
+.wave1 {
+  position: absolute;
+  width: 100%;
+  height: 7%;
+  bottom: 55%;
+}
+
+.wave_pic_1 {
+  position: absolute;
+  width: 100%;
+  height: 7%;
+  bottom: 55%;
+  animation-duration: 4862ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: 'checkin_wave1';
+}
+
+@keyframes checkin_wave1 {
+  from {
+    transform: translate(0%, 0%);
+  }
+
+  to {
+    transform: translate(-100%, 0%);
+  }
+}
+
+.wave_pic_1_sha {
+  position: absolute;
+  width: 100%;
+  height: 7%;
+  bottom: 55%;
+  animation-duration: 4862ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: 'checkin_wave1_sha';
+}
+
+@keyframes checkin_wave1_sha {
+  from {
+    transform: translate(100%, 0%);
+  }
+
+  to {
+    transform: translate(0%, 0%);
+  }
+}
+
+
+.wave_pic_2 {
+  position: absolute;
+  width: 100%;
+  height: 7%;
+  bottom: 55%;
+  animation-duration: 4000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: 'checkin_wave2';
+}
+
+@keyframes checkin_wave2 {
+  from {
+    transform: translate(0%, 0%);
+  }
+
+  to {
+    transform: translate(100%, 0%);
+  }
+}
+
+.wave_pic_2_sha {
+  position: absolute;
+  width: 100%;
+  height: 7%;
+  bottom: 55%;
+  animation-duration: 4000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: 'checkin_wave2_sha';
+}
+
+
+
+@keyframes checkin_wave2_sha {
+  from {
+    transform: translate(-100%, 0%);
+  }
+
+  to {
+    transform: translate(0%, 0%);
+  }
+}
+
+.board {
+  position: absolute;
+  background: rgb(255, 255, 255);
+  width: 100%;
+  height: 55%;
+  bottom: 0;
+  left: 0;
+}
+
+.board-card {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 80%;
+}
+
+
+radio .wx-radio-input {
+  background: url(http://i2.bvimg.com/663064/185e1b85de6d53b0.png);
+  background-size: 100% 100%;
+  border: none;
+  border-radius: 0;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+radio .wx-radio-input.wx-radio-input-checked {
+  background: url(http://i2.bvimg.com/663064/4a94342e8fd0c483.png);
+  background-size: 100% 100%;
+  border-radius: 15%;
+  width: 50rpx;
+  height: 50rpx;
+
+}
+
+radio .wx-radio-input.wx-radio-input-disabled {
+  background: url(http://i2.bvimg.com/663064/e3069a55cd00d8bd.png);
+  background-size: 100% 100%;
+}
+

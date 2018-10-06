@@ -1,0 +1,26 @@
+<!--http://i2.bvimg.com/663064/1fcfbfe2ed9291f6.png-->
+
+<image src="https://attach.bbs.miui.com/forum/201603/06/135006lbsjrj9umlljjilp.jpg" mode="aspectFill" class="page_bg">
+  <view class="card-bg">
+    <view class='card'>
+      <form bindsubmit="formSubmit">
+        <image src="../../images/lab_icon.jpg" class='user_icon' />
+        <view class="edit_view">
+          <image src="../../images/register_input_name.gif" class="edit_icon"/>
+          <input name="stuName" placeholder="学生名称"></input>
+        </view>
+       <view class="edit_view">
+          <image src="../../images/register_input_id.gif" class="edit_icon"/>
+          <input name="stuId" placeholder="学生证号"></input>
+        </view>
+        <button hover-class='btn_hover' formType="submit">
+          注册
+        </button>
+      </form>
+    </view>
+  </view>
+</image>
+
+<text class="info">
+made by imgcre
+</text>

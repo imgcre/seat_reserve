@@ -1,0 +1,51 @@
+<!--
+
+-->
+
+
+<image src="https://attach.bbs.miui.com/forum/201603/06/135006lbsjrj9umlljjilp.jpg" mode="aspectFill" class="page_bg">
+  <view class="checkin_btn_bg" />
+  <view class="checkin_btn_bg2" />
+  <view class="check_btn_front">
+    已签到
+  </view>
+
+  <!--
+  注册页面支持上传头像(头像支持修改, 这些细节由后端完成
+  由两个主板块将屏幕分成两个部分, 两个主板块的高度是可以变化的
+  
+  这个界面, 写成预约的界面
+  留下足够多的空间来预约
+  -->
+
+
+  <!--如果使用这种办法, 则，那个需要能被2pi整除-->
+
+  <canvas class="wave1" canvas-id="canvas_wave1" hidden="{{canvas1_hidden}}"/>
+  <image class="wave_pic_1" src="{{wave1_file}}"/>
+  <image class="wave_pic_1_sha" src="{{wave1_file}}"/>
+
+  <canvas class="wave1" canvas-id="canvas_wave2"  hidden="{{canvas2_hidden}}"/>
+  <image class="wave_pic_2" src="{{wave2_file}}"/>
+  <image class="wave_pic_2_sha" src="{{wave2_file}}"/>
+
+
+
+  <!--image class="wave_pic1_sha" src="{{wave1_file}}"/-->
+
+  <!--canvas class="wave1_sha" canvas-id="canvas_wave1_sha" /-->
+  <!--canvas class="wave2" canvas-id="canvas_wave2" /-->
+  <!--canvas class="wave2_sha" canvas-id="canvas_wave2_sha" /-->
+
+
+  <view class="board">
+    <view class="board-card">
+      <text>座位选择: </text>
+      <radio-group>
+      <radio wx:for="...................." disabled='true'/>
+      </radio-group>
+    </view>
+    
+  </view>
+
+</image>
