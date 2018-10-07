@@ -11,7 +11,17 @@ exports.main = async (event, context) => {
     _openid: event.userInfo.openId
   }).get()
 
-  return {
-    errorMsg: res.data.length > 0 ? "OK" : "Unregistered"
+  if (res.data.length > 0)
+  {
+    return {
+      stuName: res.data[0].stuName,
+      errorMsg: "OK"
+    }
+  } else {
+    return {
+      errorMsg: "Unregistered"
+    }
   }
+
+  
 }

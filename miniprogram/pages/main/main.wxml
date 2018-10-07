@@ -2,47 +2,63 @@
 <!--
 
 -->
-<view wx:if="{{show_result}}">
-  你在{{data}}的{{starttime[starttime_idx]}}预约了{{desk_avl[desk_idx]}}达到{{duration[duration_idx]}}。
-</view>
+<!--抽纸效果-->
 
-<view wx:if="{{!show_result}}">
+<view>
   <view class="section">
-  <view class="section__title">日期选择:</view>
-  <picker mode="date" value="{{data}}" start="{{date_start}}" end="{{date_end}}" bind:change="onDateChanged">
-    <view class="picker">
+    <view class="section__title">日期选择:</view>
+    <picker mode="date" value="{{data}}" start="{{date_start}}" end="{{date_end}}" bind:change="onDateChanged">
+      <view class="picker">
       当前选择: {{date}}
-    </view>
-  </picker>
-</view>
+      </view>
+    </picker>
+  </view>
 
-<view class="section">
-  <view class="section__title">起始时间:</view>
-  <picker mode="selector" value="{{starttime_idx}}"  range="{{starttime}}" bind:change="onStarttimeChanged">
-    <view class="picker">
-      当前选择: {{starttime[starttime_idx]}}
-    </view>
-  </picker>
-</view>
+  <view class="section">
+    <view class="section__title">起始时间:</view>
+    <picker mode="selector" value="{{starttime_idx}}"  range="{{starttime}}" bind:change="onStarttimeChanged">
+      <view class="picker">
+        当前选择: {{starttime[starttime_idx]}}
+      </view>
+    </picker>
+  </view>
 
-<view class="section">
-  <view class="section__title">占用时长:</view>
-  <picker mode="selector" value="{{duration_idx}}" range="{{duration}}" bind:change="onDurationChanged">
-    <view class="picker">
-      当前选择: {{duration[duration_idx]}}
-    </view>
-  </picker>
-</view>
+  <view class="section">
+    <view class="section__title">占用时长:</view>
+    <picker mode="selector" value="{{duration_idx}}" range="{{duration}}" bind:change="onDurationChanged">
+      <view class="picker">
+        当前选择: {{duration[duration_idx]}}
+      </view>
+    </picker>
+  </view>
 
-<view class="section">
-  <view class="section__title">座位选择:</view>
-  <picker mode="selector" value="{{desk_idx}}"  range="{{desk_avl}}" bind:change="onDeskChanged" disabled='{{desk_selector_disabled}}'>
-    <view class="picker">
-      当前选择: {{desk_avl.length > 0 ? desk_avl[desk_idx] : "已占满"}}
-    </view>
-  </picker>
-</view>
+  <view class="section">
+    <view class="section__title">座位选择:</view>
+    <picker mode="selector" value="{{desk_idx}}"  range="{{desk_avl}}" bind:change="onDeskChanged" disabled='{{desk_selector_disabled}}'>
+      <view class="picker">
+        当前选择: {{desk_avl.length > 0 ? desk_avl[desk_idx] : "已占满"}}
+      </view>
+    </picker>
+  </view>
 
 <!--选择按钮，在每次切换的时候, 查询一下-->
-<button disabled='{{btn_select_disable}}' loading='{{btn_loading}}' bind:tap="onBtnClick">选择</button>
+  <button disabled='{{btn_select_disable}}' loading='{{btn_loading}}' bind:tap="onBtnClick">选择</button>
 </view>
+
+<view wx:if="{{show_result}}" class='result-mask' bind:tap="onMaskTap" id="mask">
+  <view class='result-box'>
+    <view class='ok-icon'>
+      <view class='result-title'>预约成功</view>
+        <view class ="result-detail">
+          <text>
+            座位: {{desk_avl[desk_idx]}}
+            预约人: {{stu_name}}
+            日期: {{date}}
+            起始时间: {{starttime[starttime_idx]}}
+            占用时长: {{duration[duration_idx]}}
+        </text>
+      </view>
+    </view>
+  </view>
+</view>
+

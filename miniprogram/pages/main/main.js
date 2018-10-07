@@ -4,7 +4,8 @@ Page({
     btn_loading: false,
     desk_idx: 0,
     desk_selector_disabled: true,
-    show_result: false
+    show_result: false,
+    stu_name: "ERR"
   },
 
   onLoad: function (options) {
@@ -14,7 +15,7 @@ Page({
     this.durations = [1, 2, 3, 4]
     this.updateDate()
 
-    //TODO: 支持下拉刷新
+    //TODO: TODO TODO TODO TODO TODO 支持下拉刷新
     //如果该用户没有注册, 则先跳转到注册页面
     wx.cloud.callFunction({
       name: 'login',
@@ -28,12 +29,15 @@ Page({
           //当页面栈返回的时候, 刷新用户信息
           wx.redirectTo({
             url: "../register/register?prevPage=main"
-
+          })
+          break;
+        case "OK":
+          this.setData({
+            stu_name: res.result.stuName
           })
           break;
       }
     })
-
   },
 
   //用来修改起始日期和结束日期的
@@ -57,9 +61,9 @@ Page({
   updateStartTime: function(selected_date) {
     //如果日期是今天，那么起始时间只能选择当前时间之后的时间
     var date = new Date()
-    var today = new Date(date.getFullYear(), date.getMonth(), date.getDay())
+    var today = new Date(date.getFullYear(), date.getMonth(), date.getDate())
     var raw_starttime = this.raw_starttime.concat()
-    if (today.getTime() == new Date(selected_date.replace(/-/, "/")).getTime())
+    if (today.getTime() == new Date(selected_date.replace(/-/g, "/")).getTime())
       raw_starttime = raw_starttime.filter(x => x > date.getHours())
     this.crnt_raw_starttimes = raw_starttime
     this.crnt_starttime = raw_starttime[0]
@@ -84,16 +88,6 @@ Page({
   },
 
   updateDesks: function() {
-    //发送日期，起始时间，占用时长给服务器，返回可用的桌子
-    /*
-    console.log({
-      date: this.crnt_date,
-      startTime: this.crnt_starttime,
-      endTime: this.crnt_starttime + this.crnt_duration
-    })
-    return
-    */
-
     this.setData({
       btn_loading: true,
       btn_select_disable: true,
@@ -192,14 +186,9 @@ Page({
       switch (res.result.errorMsg)
       {
         case "OK":
-          wx.showToast({
-            title: '预约成功',
-          })
-          /*
           this.setData({
             show_result: true
           })
-          */
           break;
         default:
           wx.showToast({
@@ -212,6 +201,16 @@ Page({
     }).catch(err => {
       wx.hideLoading()
     })
+  },
+
+  onMaskTap: function(e) {
+    
+    if(e.target.id == "mask")
+    {
+      this.setData({
+        show_result: false
+      })
+    }
   }
 })
 

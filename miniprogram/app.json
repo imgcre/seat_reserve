@@ -5,13 +5,8 @@
     "pages/checkin/checkin",
     "pages/register/register",
     "pages/index/index",
-    "pages/userConsole/userConsole",
-    "pages/storageConsole/storageConsole",
-    "pages/databaseGuide/databaseGuide",
-    "pages/addFunction/addFunction",
-    "pages/deployFunctions/deployFunctions",
-    "pages/chooseLib/chooseLib",
-    "pages/home/home"
+    "pages/home/home",
+    "pages/orderRecords/orderRecords"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
