@@ -46,9 +46,9 @@ Page({
     var date = new Date()
     if (date.getHours() >= Math.max(...this.raw_starttime))
       date.setDate(date.getDate() + 1)
-    var first_valid_day = date.format("YYYY-MM-DD")
+    var first_valid_day = date.format("yyyy-MM-dd")
     date.setDate(date.getDate() + 3)
-    var endday = date.format("YYYY-MM-DD")
+    var endday = date.format("yyyy-MM-dd")
     this.crnt_date = first_valid_day
     this.setData({
       date_start: first_valid_day,
@@ -183,19 +183,26 @@ Page({
       }
     }).then(res => {
       wx.hideLoading()
+      console.log(res.result.errorMsg)
       switch (res.result.errorMsg)
       {
         case "OK":
           this.setData({
             show_result: true
           })
-          break;
+          break
+        case "self-conflict":
+          wx.showToast({
+            title: '同时段预约过多桌子',
+            icon: 'none'
+          })
+          break
         default:
           wx.showToast({
             title: '预约失败',
             icon: 'none'
           })
-          break;
+          break
       }
       this.updateDesks()
     }).catch(err => {
@@ -214,25 +221,3 @@ Page({
   }
 })
 
-String.prototype.format = function () {
-  var regexp = /\{(\d+)\}/g;
-  var args = arguments;
-  var result = this.replace(regexp, function (m, i, o, n) {
-    return args[i];
-  });
-  return result;
-}
-
-Date.prototype.format = function (fmt) {
-  var dic = {
-    "Y+": this.getFullYear(),
-    "M+": this.getMonth() + 1,
-    "D+": this.getDate()
-  }
-
-  for (var k in dic)
-    if (new RegExp("({0})".format(k)).test(fmt))
-      fmt = fmt.replace(RegExp.$1, RegExp.$1 == 1 ? dic[k] : ("0" + dic[k]).substr(-RegExp.$1.length))
-
-  return fmt;
-}

@@ -44,9 +44,9 @@
 					"scene": "1096"
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "233",
-					"pathName": "pages/main/main",
+					"pathName": "pages/orderRecords/orderRecords",
 					"query": "",
 					"scene": "1096"
 				}

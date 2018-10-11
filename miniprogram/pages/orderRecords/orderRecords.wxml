@@ -1,2 +1,82 @@
-<!--miniprogram/pages/orderRecords/orderRecords.wxml-->
-<text>miniprogram/pages/orderRecords/orderRecords.wxml</text>
+<!--
+最上方一个虚框，里面是+号，点击之后跳转到main页面
+下面是记录，按离现在的时间排序（离我最近的，越重要
+已经失效的预约排在后面，按离现在的时间排序
+
+-->
+
+<view class="tab-group">
+  <view wx:for="{{['可用', '已过期', '已取消']}}" class="{{tab_sel_state == index ? 'tab-selected' : ''}}" bind:tap="onTabTap" id="{{index}}">
+    {{item}}   
+  </view>
+</view>
+
+<!--TODO :支持删除预约-->
+<!--
+字段: 日期 开始时间 占用时长, 图标是座位号
+不同的桌号使用不同的背景颜色
+
+背景颜色是用hash计算出来的, 一共提供20种颜色, 饱和度和亮度要相同
+背景(颜色)是服务器发送过来的
+(圆形的
+_________
+|       |    日期:
+|   1   |    开始时间:
+|       |    占用时长:
+--------- 
+-->
+
+<!--200rpx-->
+<template name='list-item'>
+  <view class='adv-list-item'> <!---->
+    <view class='adv-list-item--icon'>
+      <view class='adv-list-item--icon--fore'>
+        {{deskId}}
+      </view>
+    </view>
+    <!--在右边的框-->
+    <view class='adv-list-item--contentbg'>
+      <view class='.adv-list-item--contentbg--content'>
+        <text> 座位号: {{deskId}}
+          开始日期: {{startDate}}
+          开始时间: {{startTime}}
+          占用时长: {{duration}}
+        </text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<view class="tab-content-container">
+  <scroll-view scroll-y="true" hidden="{{tab_sel_state != 0}}">
+    <template is='list-item' wx:for="{{valid_records}}" data='{{...item}}'/>
+  </scroll-view>
+
+  <scroll-view scroll-y="true" hidden="{{tab_sel_state != 1}}">
+    <template is='list-item' wx:for="{{expired_records}}" data='{{...item}}'/>
+  </scroll-view>
+
+  <scroll-view scroll-y="true" hidden="{{tab_sel_state != 2}}">
+    <template is='list-item' wx:for="{{cancelled_records}}" data='{{...item}}'/>
+  </scroll-view>
+</view>
+
+<!--这个是右下角的+号-->
+<view class="FAB" bind:tap="onFABTapped"> <!--背景色-->
+  <view class="FAB--icon">  <!--前面的加号-->
+  </view>
+</view>
+
+<!--下面两个用条形框 分开-->
+<view wx:for="{{valid_arr}}">
+{{item.startTime}}
+</view>
+
+<view wx:for="{{expired_arr}}">
+</view>
+
+
+
+
+
+

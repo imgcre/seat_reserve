@@ -18,7 +18,8 @@ exports.main = async (event, context) => {
     skip = count - MAX_LIMIT;
 
   var res = await records.where({
-    date: event.date
+    date: event.date,
+    cancelled: false
   }).skip(skip).get(MAX_LIMIT)
   const fullDeskIds = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   var conflicted = res.data.filter(x => (x.endTime > event.startTime) == (event.endTime > x.startTime)).map(x => x.deskId)

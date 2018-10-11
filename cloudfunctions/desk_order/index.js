@@ -8,6 +8,9 @@ exports.main = async (event, context) => {
   const db = cloud.database()
   const records = db.collection('deskUsageRecords')
 
+
+  const beginTs = Date.from(`${event.date} ${event.startTime}`).valueOf()
+  const endTs = Date.from(`${event.date} ${event.endTime}`).valueOf()
   //先查询一下
   //event.date
   //event.endTime
@@ -26,6 +29,26 @@ exports.main = async (event, context) => {
     }
   })
 
+  //同一个用户同个时刻只能占用一个桌子
+  var non_cancelled, page = 0
+  do {
+    non_cancelled = (await cloud.callFunction({
+      name: 'query_order_records',
+      data: {
+        type: 'non-cancelled',
+        page
+      }
+    })).result.data
+
+    if (non_cancelled.filter(x => (x.endTs > beginTs) == (endTs > x.beginTs)).length > 0)
+    {
+      return {
+        errorMsg: "self-conflict"
+      }
+    }
+    page++
+  } while (non_cancelled.length > 0)
+
   console.log(res.result.avl)
   if(res.result.avl.find(x => x == event.deskId) != undefined)
   {
@@ -37,7 +60,10 @@ exports.main = async (event, context) => {
         endTime: event.endTime,
         startTime: event.startTime,
         deskId: event.deskId,
-        _openid: event.userInfo.openId
+        _openid: event.userInfo.openId,
+        beginTs,
+        endTs,
+        cancelled: false
       }
     })
     return {
@@ -52,4 +78,9 @@ exports.main = async (event, context) => {
     }
   }
 
+}
+
+Date.from = function (str, reg = /(\d+)-(\d+)-(\d+)\s(\d+)/) {
+  reg.exec(str)
+  return new Date(...[RegExp.$1, RegExp.$2 - 1, RegExp.$3, RegExp.$4].map(x => parseInt(x)))
 }
