@@ -187,7 +187,12 @@ Page({
       switch (res.result.errorMsg)
       {
         case "OK":
+        this.crnt_starttime
           this.setData({
+            sel_desk: this.crnt_desk,
+            sel_data: this.crnt_date,
+            sel_crntTime: this.crnt_starttime,
+            sel_duration: this.crnt_duration,
             show_result: true
           })
           break
@@ -197,6 +202,12 @@ Page({
             icon: 'none'
           })
           break
+        case "too-frequent":
+          wx.showToast({
+            title: '预约过于频繁',
+            icon: 'none'
+          })
+          break;
         default:
           wx.showToast({
             title: '预约失败',

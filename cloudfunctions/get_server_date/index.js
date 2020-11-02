@@ -3,13 +3,11 @@ const cloud = require('wx-server-sdk')
 
 cloud.init()
 
-// 云函数入口函数
-//返回时间戳
 exports.main = async (event, context) => {
   var utc = new Date().getTime()
 
   return {
-    date: utc + 8 * 60 * 60 * 1000
+    date: utc
   }
 }
 

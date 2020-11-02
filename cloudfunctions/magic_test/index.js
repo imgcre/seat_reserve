@@ -17,8 +17,6 @@ exports.main = async (event, context) => {
   var res = await records.get()
   var data = res.data
 
-  console.log(new Date(1539198000000))
-
   //_id
   //可以通过update对字段添加字段
   

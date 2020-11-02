@@ -31,110 +31,39 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
+  onSwiperChange(e) {
+    const {detail: {current}} = e;
+    this.setData({
+      tab_sel_state: current,
+    })
+  },
+
   onReady: function () {
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    wx.cloud.callFunction({
-      name: 'query_order_records',
-      data: {
-        type: 'valid',
-        page: 0
-      }
-    }).then(res => {
-      //res.result.data 是个数组
+  onShow() {
+    ['valid', 'expired', 'cancelled'].forEach(async curTpye => {
+      const {result: {data}} = await wx.cloud.callFunction({
+        name: 'query_order_records',
+        data: {
+          type: curTpye,
+          page: 0,
+        },
+      });
       this.setData({
-        valid_records: res.result.data.map(x => {
-          return {
-            deskId: x.deskId,
-            startDate: new Date(x.beginTs - 8 * 60 * 60 * 1000).format("yyyy-MM-dd"),
-            startTime: new Date(x.beginTs - 8 * 60 * 60 * 1000).format("hh:mm:ss"),
-            duration: `${(x.endTs - x.beginTs) / 1000 / 60 / 60}小时`
-          }
-        })
-      })
-    })
-
-    wx.cloud.callFunction({
-      name: 'query_order_records',
-      data: {
-        type: 'expired',
-        page: 0
-      }
-    }).then(res => {
-      this.setData({
-        expired_records: res.result.data.map(x => {
-          return {
-            deskId: x.deskId,
-            startDate: new Date(x.beginTs - 8 * 60 * 60 * 1000).format("yyyy-MM-dd"),
-            startTime: new Date(x.beginTs - 8 * 60 * 60 * 1000).format("hh:mm:ss"),
-            duration: `${(x.endTs - x.beginTs) / 1000 / 60 / 60}小时`
-          }
-        })
-      })
-    })
-
-    wx.cloud.callFunction({
-      name: 'query_order_records',
-      data: {
-        type: 'cancelled',
-        page: 0
-      }
-    }).then(res => {
-      this.setData({
-        cancelled_records: res.result.data.map(x => {
-          return {
-            deskId: x.deskId,
-            startDate: new Date(x.beginTs - 8 * 60 * 60 * 1000).format("yyyy-MM-dd"),
-            startTime: new Date(x.beginTs - 8 * 60 * 60 * 1000).format("hh:mm:ss"),
-            duration: `${(x.endTs - x.beginTs) / 1000 / 60 / 60}小时`
-          }
-        })
-      })
-    })
+        [`${curTpye}_records`]: data.map(({deskId, beginTs, endTs, _id}) => ({
+            _id, deskId,
+            duration: `${(endTs - beginTs) / 1000 / 60 / 60}小时`,
+            ...Object.fromEntries(Object.entries({
+              startDate: 'yyyy-MM-dd',
+              startTime: 'hh:mm:ss',
+            }).map(([key, value]) => [key, new Date(beginTs).format(value)])),
+          }),
+        ),
+      });
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
 
 String.prototype.format = function () {

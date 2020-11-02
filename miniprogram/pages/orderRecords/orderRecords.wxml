@@ -5,8 +5,10 @@
 
 -->
 
+<wxs module="w" src="./orderRecords.wxs" />
+
 <view class="tab-group">
-  <view wx:for="{{['可用', '已过期', '已取消']}}" class="{{tab_sel_state == index ? 'tab-selected' : ''}}" bind:tap="onTabTap" id="{{index}}">
+  <view wx:for="{{['可用', '已过期', '已取消']}}" wx:key="index" class="{{tab_sel_state == index ? 'tab-selected' : ''}}" bind:tap="onTabTap" id="{{index}}">
     {{item}}   
   </view>
 </view>
@@ -28,51 +30,63 @@ _________
 
 <!--200rpx-->
 <template name='list-item'>
-  <view class='adv-list-item'> <!---->
-    <view class='adv-list-item--icon'>
-      <view class='adv-list-item--icon--fore'>
-        {{deskId}}
-      </view>
+  <view class='item' id="{{_id}}"> <!---->
+    <view class='icon'>
+      {{deskId}}
     </view>
     <!--在右边的框-->
-    <view class='adv-list-item--contentbg'>
-      <view class='.adv-list-item--contentbg--content'>
-        <text> 座位号: {{deskId}}
-          开始日期: {{startDate}}
-          开始时间: {{startTime}}
-          占用时长: {{duration}}
-        </text>
+    <view class='content'>
+      <view class='item'>
+        <view class="name">
+          开始日期:
+        </view>
+        <view class="value">
+          {{startDate}}
+        </view>
+      </view>
+
+
+      <view class='item'>
+        <view class="name">
+          开始时间:
+        </view>
+        <view class="value">
+          {{startTime}}
+        </view>
+      </view>
+
+
+      <view class='item'>
+        <view class="name">
+          占用时长:
+        </view>
+        <view class="value">
+          {{duration}}
+        </view>
+      </view>
+
+    </view>
+    <view class=".adv-list-item--option">
+      <view class="adv-list-item--option--caption">
+        取消
       </view>
     </view>
   </view>
+  
 </template>
 
-<view class="tab-content-container">
-  <scroll-view scroll-y="true" hidden="{{tab_sel_state != 0}}">
-    <template is='list-item' wx:for="{{valid_records}}" data='{{...item}}'/>
-  </scroll-view>
-
-  <scroll-view scroll-y="true" hidden="{{tab_sel_state != 1}}">
-    <template is='list-item' wx:for="{{expired_records}}" data='{{...item}}'/>
-  </scroll-view>
-
-  <scroll-view scroll-y="true" hidden="{{tab_sel_state != 2}}">
-    <template is='list-item' wx:for="{{cancelled_records}}" data='{{...item}}'/>
-  </scroll-view>
-</view>
+<swiper current="{{tab_sel_state}}" class="tab-content-container" bind:change="onSwiperChange" duration="300">
+  <swiper-item wx:for="{{[valid_records, expired_records, cancelled_records]}}" wx:for-item="records">
+    <view class="adv-list">
+      <template is='list-item' wx:for="{{records}}" wx:key="_id" data='{{...item}}'/>
+    </view>
+  </swiper-item>
+</swiper>
 
 <!--这个是右下角的+号-->
-<view class="FAB" bind:tap="onFABTapped"> <!--背景色-->
+<view class="FAB" hover-class="hover" bind:tap="onFABTapped"> <!--背景色-->
   <view class="FAB--icon">  <!--前面的加号-->
   </view>
-</view>
-
-<!--下面两个用条形框 分开-->
-<view wx:for="{{valid_arr}}">
-{{item.startTime}}
-</view>
-
-<view wx:for="{{expired_arr}}">
 </view>
 
 

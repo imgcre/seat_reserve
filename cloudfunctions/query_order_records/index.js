@@ -20,11 +20,11 @@ exports.main = async (event, context) => {
     case 'non-cancelled':
       break
     case 'valid':
-      cond.endTs = $.gte(new Date().getTime() + 8 * 60 * 60 * 1000)
+      cond.endTs = $.gte(new Date().getTime())
       order = 'asc'
       break
     case 'expired':
-      cond.endTs = $.lt(new Date().getTime() + 8 * 60 * 60 * 1000)
+      cond.endTs = $.lt(new Date().getTime())
       break
     case 'cancelled':
       cond.cancelled = true
@@ -34,7 +34,6 @@ exports.main = async (event, context) => {
   }
 
   var docs = await records.where(cond).orderBy('endTs', order).skip(20 * event.page).limit(20).field({
-    _id: false,
     beginTs: true,
     endTs: true,
     deskId: true,
